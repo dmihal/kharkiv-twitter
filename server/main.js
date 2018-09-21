@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import Links from '/imports/api/links';
+import { ServiceConfiguration } from 'meteor/service-configuration';
 
 function insertLink(title, url) {
   Links.insert({ title, url, createdAt: new Date() });
@@ -28,4 +29,9 @@ Meteor.startup(() => {
       'https://forums.meteor.com'
     );
   }
+
+  ServiceConfiguration.configurations.upsert(
+    { service: 'facebook' },
+    { $set: Meteor.settings.facebook }
+  );
 });
