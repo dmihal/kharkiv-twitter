@@ -1,4 +1,5 @@
 import React from 'react';
+import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -18,14 +19,18 @@ const styles = {
   },
 };
 
-function Header({ classes }) {
+function Header({ classes, user }) {
   return (
     <AppBar position="static">
       <Toolbar>
         <Typography variant="title" color="inherit" className={classes.grow}>
           Kharkiv-Twitter
         </Typography>
-        <Button color="inherit" onClick={() => Meteor.loginWithFacebook()}>Login</Button>
+        {user ? (
+          <Typography color="inherit">{user.profile.name}</Typography>
+        ) : (
+          <Button color="inherit" onClick={() => Meteor.loginWithFacebook()}>Login</Button>
+        )}
       </Toolbar>
     </AppBar>
   );
@@ -35,4 +40,10 @@ Header.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Header);
+const tracker = () => {
+  return {
+    user: Meteor.user(),
+  };
+};
+
+export default withStyles(styles)(withTracker(tracker)(Header));
