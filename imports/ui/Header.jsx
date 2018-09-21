@@ -1,4 +1,5 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -24,7 +25,7 @@ function Header({ classes }) {
         <Typography variant="title" color="inherit" className={classes.grow}>
           Kharkiv-Twitter
         </Typography>
-        <Button color="inherit">Login</Button>
+        <Button color="inherit" onClick={() => Meteor.loginWithFacebook()}>Login</Button>
       </Toolbar>
     </AppBar>
   );
