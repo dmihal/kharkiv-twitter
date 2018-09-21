@@ -21,7 +21,9 @@ const styles = theme => ({
 });
 
 const tracker = () => {
+  const subscription = Meteor.subscribe('recentTweets');
   return {
+    loading: !subscription.ready(),
     tweets: Tweets.find({}, { sort: { createdAt: -1 } }).fetch(),
   };
 };
@@ -31,6 +33,10 @@ export default
 @withTracker(tracker)
 class Feed extends Component {
   render() {
+    if (this.props.loading) {
+      return <Typography>Loading...</Typography>
+    }
+
     const tweets = this.props.tweets.map(
       link => this.makeLink(link)
     );

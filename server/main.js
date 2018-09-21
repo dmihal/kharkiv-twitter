@@ -25,3 +25,20 @@ Meteor.methods({
     Tweets.newTweet(message, this.userId);
   },
 });
+
+Meteor.publish('recentTweets', function() {
+  return [
+    Tweets.find({}, {
+      sort: {
+        createdAt: -1,
+      },
+      limit: 10,
+    }),
+    Meteor.users.find({}, {
+      fields: {
+        'profile.name': 1,
+        'services.facebook.picture': 1,
+      },
+    }),
+  ];
+})
