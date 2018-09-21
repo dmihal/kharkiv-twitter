@@ -1,33 +1,15 @@
 import { Meteor } from 'meteor/meteor';
-import Links from '/imports/api/links';
+import Tweets from '/imports/api/tweets';
 import { ServiceConfiguration } from 'meteor/service-configuration';
-
-function insertLink(title, url) {
-  Links.insert({ title, url, createdAt: new Date() });
-}
 
 Meteor.startup(() => {
   // If the Links collection is empty, add some data.
-  if (Links.find().count() === 0) {
-    insertLink(
-      'Do the Tutorial',
-      'https://www.meteor.com/tutorials/react/creating-an-app'
-    );
+  if (Tweets.find().count() === 0 && Meteor.users.find().count() > 0) {
+    Tweets.newTweet('Welcome to KharkivJS', Meteor.users.findOne()._id);
 
-    insertLink(
-      'Follow the Guide',
-      'http://guide.meteor.com'
-    );
+    Tweets.newTweet('I\'m so excited to talk about Meteor.js :D', Meteor.users.findOne()._id);
 
-    insertLink(
-      'Read the Docs',
-      'https://docs.meteor.com'
-    );
-
-    insertLink(
-      'Discussions',
-      'https://forums.meteor.com'
-    );
+    Tweets.newTweet('Let me know if you have any questions!', Meteor.users.findOne()._id);
   }
 
   ServiceConfiguration.configurations.upsert(
