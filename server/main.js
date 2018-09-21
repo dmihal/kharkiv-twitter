@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
 import Tweets from '/imports/api/tweets';
 import { ServiceConfiguration } from 'meteor/service-configuration';
 
@@ -16,4 +17,11 @@ Meteor.startup(() => {
     { service: 'facebook' },
     { $set: Meteor.settings.facebook }
   );
+});
+
+Meteor.methods({
+  postTweet(message) {
+    check(this.userId, String);
+    Tweets.newTweet(message, this.userId);
+  },
 });
