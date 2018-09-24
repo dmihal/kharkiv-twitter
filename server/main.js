@@ -13,10 +13,10 @@ Meteor.startup(() => {
     Tweets.newTweet('Let me know if you have any questions!', Meteor.users.findOne()._id);
   }
 
-  ServiceConfiguration.configurations.upsert(
+  /*ServiceConfiguration.configurations.upsert(
     { service: 'facebook' },
     { $set: Meteor.settings.facebook }
-  );
+  );*/
 });
 
 Meteor.methods({
