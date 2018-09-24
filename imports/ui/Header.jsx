@@ -29,7 +29,9 @@ function Header({ classes, user }) {
         {user ? (
           <Typography color="inherit">{user.profile.name}</Typography>
         ) : (
-          <Button color="inherit" onClick={() => Meteor.loginWithFacebook()}>Login</Button>
+          <Button color="inherit" onClick={() => Meteor.loginWithFacebook({ loginStyle: "redirect" })}>
+            Login
+          </Button>
         )}
       </Toolbar>
     </AppBar>
